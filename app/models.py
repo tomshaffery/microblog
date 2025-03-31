@@ -8,6 +8,16 @@ from app import login
 from flask_login import UserMixin
 from hashlib import md5
 
+followers = sa.Table(
+    'followers',
+    db.metadata,
+    sa.Column('follower_id', sa.Integer, sa.ForeignKey('user.id'),
+              primary_key =True),
+    sa.Column('followed_id', sa.Integer, sa.ForeignKey('user.id'),
+              primary_key=True)
+    )
+
+
 @login.user_loader
 def load_user(id):
     return db.session.get(User, int(id))
